@@ -90,8 +90,9 @@ func BenchmarkGetBolt(b *testing.B) {
 		b.Fatal(err)
 	}
 
+	bucketName := []byte("testBucket")
 	updateFn := func(tx *bolt.Tx) error {
-		bc, err := tx.CreateBucket([]byte("testBucket"))
+		bc, err := tx.CreateBucket(bucketName)
 		if err != nil {
 			b.Fatal(err)
 		}
@@ -107,7 +108,7 @@ func BenchmarkGetBolt(b *testing.B) {
 
 	for i := 0; i < b.N; i++ {
 		db.View(func(tx *bolt.Tx) error {
-			bc := tx.Bucket([]byte("testBucket"))
+			bc := tx.Bucket(bucketName)
 			bc.Get(testKey)
 			return nil
 		})
