@@ -1,0 +1,87 @@
+{
+    "SourcePath": "struct.go",
+    "SourcePackage": "serialize_bench",
+    "ZebraSchemaId": 0,
+    "Structs": [
+        {
+            "StructName": "A",
+            "Fields": [
+                {
+                    "Zid": 0,
+                    "FieldGoName": "Name",
+                    "FieldTagName": "Name",
+                    "FieldTypeStr": "string",
+                    "FieldCategory": 23,
+                    "FieldPrimitive": 2,
+                    "FieldFullType": {
+                        "Kind": 2,
+                        "Str": "string"
+                    }
+                },
+                {
+                    "Zid": 1,
+                    "FieldGoName": "BirthDay",
+                    "FieldTagName": "BirthDay",
+                    "FieldTypeStr": "time.Time",
+                    "FieldCategory": 23,
+                    "FieldPrimitive": 20,
+                    "FieldFullType": {
+                        "Kind": 20,
+                        "Str": "Time"
+                    }
+                },
+                {
+                    "Zid": 2,
+                    "FieldGoName": "Phone",
+                    "FieldTagName": "Phone",
+                    "FieldTypeStr": "string",
+                    "FieldCategory": 23,
+                    "FieldPrimitive": 2,
+                    "FieldFullType": {
+                        "Kind": 2,
+                        "Str": "string"
+                    }
+                },
+                {
+                    "Zid": 3,
+                    "FieldGoName": "Siblings",
+                    "FieldTagName": "Siblings",
+                    "FieldTypeStr": "int",
+                    "FieldCategory": 23,
+                    "FieldPrimitive": 13,
+                    "FieldFullType": {
+                        "Kind": 13,
+                        "Str": "int"
+                    }
+                },
+                {
+                    "Zid": 4,
+                    "FieldGoName": "Spouse",
+                    "FieldTagName": "Spouse",
+                    "FieldTypeStr": "bool",
+                    "FieldCategory": 23,
+                    "FieldPrimitive": 18,
+                    "FieldFullType": {
+                        "Kind": 18,
+                        "Str": "bool"
+                    }
+                },
+                {
+                    "Zid": 5,
+                    "FieldGoName": "Money",
+                    "FieldTagName": "Money",
+                    "FieldTypeStr": "float64",
+                    "FieldCategory": 23,
+                    "FieldPrimitive": 4,
+                    "FieldFullType": {
+                        "Kind": 4,
+                        "Str": "float64"
+                    }
+                }
+            ]
+        }
+    ],
+    "Imports": [
+        "\"time\""
+    ]
+}
