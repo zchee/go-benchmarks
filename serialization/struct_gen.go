@@ -1,4 +1,4 @@
-package serialize_bench
+package serialization_bench
 
 // NOTE: THIS FILE WAS PRODUCED BY THE
 // ZEBRAPACK CODE GENERATION TOOL (github.com/glycerine/zebrapack)

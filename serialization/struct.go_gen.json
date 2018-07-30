@@ -1,6 +1,6 @@
 {
     "SourcePath": "struct.go",
-    "SourcePackage": "serialize_bench",
+    "SourcePackage": "serialization_bench",
     "ZebraSchemaId": 0,
     "Structs": [
         {

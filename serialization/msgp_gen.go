@@ -1,4 +1,4 @@
-package serialize_bench
+package serialization_bench
 
 // NOTE: THIS FILE WAS PRODUCED BY THE
 // MSGP CODE GENERATION TOOL (github.com/tinylib/msgp)

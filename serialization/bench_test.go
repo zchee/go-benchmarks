@@ -1,4 +1,4 @@
-package serialize_bench
+package serialization_bench
 
 import (
 	"bytes"
