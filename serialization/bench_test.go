@@ -373,6 +373,29 @@ func BenchmarkMsgpUnmarshal(b *testing.B) {
 
 // github.com/glycerine/zebrapack
 
+func BenchmarkZebraPackMarshal(b *testing.B) {
+	b.StopTimer()
+	data := commonData
+
+	b.ReportAllocs()
+	_, err := data[rand.Intn(len(data))].ZMarshalMsg(nil)
+	if err != nil {
+		panic(err)
+	}
+	// compute bytes written
+	writ := 0
+	for i := range data {
+		o, _ := data[i].ZMarshalMsg(nil)
+		writ += len(o)
+	}
+	b.SetBytes(int64(writ / len(data)))
+	buf := make([]byte, 0, 100)
+	b.StartTimer()
+	for i := 0; i < b.N; i++ {
+		data[rand.Intn(len(data))].ZMarshalMsg(buf)
+	}
+}
+
 func BenchmarkZebraPackUnmarshal(b *testing.B) {
 	b.StopTimer()
 	//	data := generateZebraPack()
@@ -416,30 +439,5 @@ func BenchmarkZebraPackUnmarshal(b *testing.B) {
 			}
 		}
 
-	}
-}
-
-func BenchmarkZebraPackMarshal(b *testing.B) {
-	b.StopTimer()
-	//data := generateZebraPack()
-	data := commonData
-
-	b.ReportAllocs()
-	_, err := data[rand.Intn(len(data))].ZMarshalMsg(nil)
-	if err != nil {
-		panic(err)
-	}
-	// compute bytes written
-	writ := 0
-	for i := range data {
-		o, _ := data[i].ZMarshalMsg(nil)
-		writ += len(o)
-	}
-	b.SetBytes(int64(writ / len(data)))
-	buf := make([]byte, 0, 100)
-	b.StartTimer()
-	for i := 0; i < b.N; i++ {
-		data[rand.Intn(len(data))].ZMarshalMsg(buf)
-		//proto.Marshal(data[rand.Intn(len(data))])
 	}
 }
