@@ -9,6 +9,7 @@ import (
 
 	"github.com/karrick/godirwalk"
 	"github.com/opencontainers/selinux/pkg/pwalk"
+	"github.com/stretchr/powerwalk"
 
 	"github.com/zchee/go-benchmarks/path/filepath/walk/fastwalk"
 )
@@ -57,6 +58,17 @@ func BenchmarkPwalk(b *testing.B) {
 
 	for i := 0; i < b.N; i++ {
 		err := pwalk.Walk(*benchDir, func(path string, info os.FileInfo, err error) error { return nil })
+		if err != nil {
+			b.Fatal(err)
+		}
+	}
+}
+
+func BenchmarkPowerwalk(b *testing.B) {
+	b.ReportAllocs()
+
+	for i := 0; i < b.N; i++ {
+		err := powerwalk.Walk(*benchDir, func(path string, info os.FileInfo, err error) error { return nil })
 		if err != nil {
 			b.Fatal(err)
 		}
