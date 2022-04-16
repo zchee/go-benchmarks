@@ -45,6 +45,4 @@ coverage.*
 vendor
 
 # benchmarks
-old.txt
-new.txt
-bench.txt
+*.txt
