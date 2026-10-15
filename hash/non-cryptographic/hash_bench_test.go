@@ -2,10 +2,8 @@ package hashbench
 
 import (
 	"flag"
-	"fmt"
 	"hash/maphash"
-	"os"
-	"runtime"
+	"strconv"
 	"testing"
 
 	xxhash "github.com/cespare/xxhash/v2"
@@ -13,21 +11,10 @@ import (
 )
 
 var (
-	cespare   bool
-	zeebo     bool
-	byteshash bool
+	cespare   = flag.Bool("cespare", false, "benchmark the github.com/cespare/xxhash/v2")
+	zeebo     = flag.Bool("zeebo", false, "benchmark the github.com/zeebo/xxh3")
+	byteshash = flag.Bool("maphash", false, "benchmark the hash/maphash")
 )
-
-func TestMain(m *testing.M) {
-	var status int
-	defer func() { os.Exit(status) }()
-
-	flag.BoolVar(&cespare, "cespare", false, "benchmark the github.com/cespare/xxhash/v2")
-	flag.BoolVar(&zeebo, "zeebo", false, "benchmark the github.com/zeebo/xxh3")
-	flag.BoolVar(&byteshash, "maphash", false, "benchmark the maphash")
-
-	status = m.Run()
-}
 
 func BenchmarkHash(b *testing.B) {
 	sizes := []int{
@@ -36,55 +23,45 @@ func BenchmarkHash(b *testing.B) {
 		512, 1024, 100 * 1024,
 	}
 
-	if cespare {
+	if *cespare {
 		for _, size := range sizes {
-			b.Run(fmt.Sprintf("%d", size), func(b *testing.B) {
+			b.Run(strconv.Itoa(size), func(b *testing.B) {
 				b.SetBytes(int64(size))
-				var acc uint64
-				d := string(make([]byte, size))
 				b.ReportAllocs()
-				b.ResetTimer()
+				d := string(make([]byte, size))
 
-				for i := 0; i < b.N; i++ {
-					acc = xxhash.Sum64String(d)
+				for b.Loop() {
+					xxhash.Sum64String(d)
 				}
-				runtime.KeepAlive(acc)
 			})
 		}
 	}
 
-	if zeebo {
+	if *zeebo {
 		for _, size := range sizes {
-			b.Run(fmt.Sprintf("%d", size), func(b *testing.B) {
+			b.Run(strconv.Itoa(size), func(b *testing.B) {
 				b.SetBytes(int64(size))
-				var acc uint64
-				d := string(make([]byte, size))
 				b.ReportAllocs()
-				b.ResetTimer()
+				d := string(make([]byte, size))
 
-				for i := 0; i < b.N; i++ {
-					acc = xxh3.HashString(d)
+				for b.Loop() {
+					xxh3.HashString(d)
 				}
-				runtime.KeepAlive(acc)
 			})
 		}
 	}
 
-	if byteshash {
+	if *byteshash {
 		for _, size := range sizes {
-			b.Run(fmt.Sprintf("%d", size), func(b *testing.B) {
+			b.Run(strconv.Itoa(size), func(b *testing.B) {
 				b.SetBytes(int64(size))
-				var acc uint64
-				d := string(make([]byte, size))
 				b.ReportAllocs()
-				b.ResetTimer()
+				d := string(make([]byte, size))
+				seed := maphash.MakeSeed()
 
-				for i := 0; i < b.N; i++ {
-					var h maphash.Hash
-					h.WriteString(d)
-					acc = h.Sum64()
+				for b.Loop() {
+					maphash.String(seed, d)
 				}
-				runtime.KeepAlive(acc)
 			})
 		}
 	}
