@@ -5,6 +5,7 @@ import (
 	"hash/maphash"
 	"strconv"
 	"testing"
+	"unsafe"
 
 	bdxxhash3 "github.com/bytedance/gopkg/util/xxhash3"
 	xxhash "github.com/cespare/xxhash/v2"
@@ -92,7 +93,7 @@ func BenchmarkHash(b *testing.B) {
 				d := string(make([]byte, size))
 
 				for b.Loop() {
-					simdxxhash.Sum64String(d)
+					simdxxhash.Sum64(unsafe.Slice(unsafe.StringData(d), len(d)))
 				}
 			})
 		}
