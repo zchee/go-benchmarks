@@ -6,7 +6,9 @@ import (
 	"strconv"
 	"testing"
 
+	bdxxhash3 "github.com/bytedance/gopkg/util/xxhash3"
 	xxhash "github.com/cespare/xxhash/v2"
+	simdxxhash "github.com/go-simd/xxhash"
 	"github.com/zeebo/xxh3"
 )
 
@@ -14,6 +16,8 @@ var (
 	cespare   = flag.Bool("cespare", false, "benchmark the github.com/cespare/xxhash/v2")
 	zeebo     = flag.Bool("zeebo", false, "benchmark the github.com/zeebo/xxh3")
 	byteshash = flag.Bool("maphash", false, "benchmark the hash/maphash")
+	bytedance = flag.Bool("bytedance", false, "benchmark the github.com/bytedance/gopkg/util/xxhash3")
+	gosimd    = flag.Bool("gosimd", false, "benchmark the github.com/go-simd/xxhash")
 )
 
 func BenchmarkHash(b *testing.B) {
@@ -61,6 +65,34 @@ func BenchmarkHash(b *testing.B) {
 
 				for b.Loop() {
 					maphash.String(seed, d)
+				}
+			})
+		}
+	}
+
+	if *bytedance {
+		for _, size := range sizes {
+			b.Run(strconv.Itoa(size), func(b *testing.B) {
+				b.SetBytes(int64(size))
+				b.ReportAllocs()
+				d := string(make([]byte, size))
+
+				for b.Loop() {
+					bdxxhash3.HashString(d)
+				}
+			})
+		}
+	}
+
+	if *gosimd {
+		for _, size := range sizes {
+			b.Run(strconv.Itoa(size), func(b *testing.B) {
+				b.SetBytes(int64(size))
+				b.ReportAllocs()
+				d := string(make([]byte, size))
+
+				for b.Loop() {
+					simdxxhash.Sum64String(d)
 				}
 			})
 		}

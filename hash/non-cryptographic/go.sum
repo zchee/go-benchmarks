@@ -1,7 +1,11 @@
+github.com/bytedance/gopkg v0.1.5-0.20261013035810-7d9cd87879e6 h1:/HGZw81AjCLMJwObKEwR5on7RnR/Llp36rjW0OLmOB8=
+github.com/bytedance/gopkg v0.1.5-0.20261013035810-7d9cd87879e6/go.mod h1:v1zWfPm21Fb+OsyXN2VAHdL6TBb2L88anLQgdyje6R4=
 github.com/cespare/xxhash/v2 v2.3.0 h1:UL815xU9SqsFlibzuggzjXhog7bL6oX9BbNZnL2UFvs=
 github.com/cespare/xxhash/v2 v2.3.0/go.mod h1:VGX0DQ3Q6kWi7AoAeZDth3/j3BFtOZR5XLFGgcrjCOs=
-github.com/klauspost/cpuid/v2 v2.2.10 h1:tBs3QSyvjDyFTq3uoc/9xFpCuOsJQFNPiAhYdw2skhE=
-github.com/klauspost/cpuid/v2 v2.2.10/go.mod h1:hqwkgyIinND0mEev00jJYCxPNVRVXFQeu1XKlok6oO0=
+github.com/go-simd/xxhash v0.3.1 h1:BhX8fWLdURiuI4pU91pKCasT2FH1binIUnO8HelmpGU=
+github.com/go-simd/xxhash v0.3.1/go.mod h1:5H3ArE4N25v21BJCHaKnvvVfCx7dqEH61YsNo6crMsM=
+github.com/klauspost/cpuid/v2 v2.4.0 h1:S6Hrbc7+ywsr0r+RLapfGBHfyefhCTwEh3A0tV913Dw=
+github.com/klauspost/cpuid/v2 v2.4.0/go.mod h1:19jmZ9mjzoF//ddRSUsv0zfBTJWh3QJh9FNxZTMrGxU=
 github.com/zeebo/assert v1.3.0 h1:g7C04CbJuIDKNPFHmsk4hwZDO5O+kntRxzaUoNXj+IQ=
 github.com/zeebo/assert v1.3.0/go.mod h1:Pq9JiuJQpG8JLJdtkwrJESF0Foym2/D9XMU5ciN/wJ0=
 github.com/zeebo/xxh3 v1.1.1-0.20260908150653-f7225998cebf h1:enYm6eO9pkyOXOHgdbVr0E8qKt7JDRfyeDtz/JBrF3c=
