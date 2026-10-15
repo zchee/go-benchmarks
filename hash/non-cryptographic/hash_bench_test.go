@@ -1,9 +1,9 @@
 package hashbench
 
 import (
-	"bytes/hash"
 	"flag"
 	"fmt"
+	"hash/maphash"
 	"os"
 	"runtime"
 	"testing"
@@ -24,7 +24,7 @@ func TestMain(m *testing.M) {
 
 	flag.BoolVar(&cespare, "cespare", false, "benchmark the github.com/cespare/xxhash/v2")
 	flag.BoolVar(&zeebo, "zeebo", false, "benchmark the github.com/zeebo/xxh3")
-	flag.BoolVar(&byteshash, "byteshash", false, "benchmark the bytes/hash")
+	flag.BoolVar(&byteshash, "maphash", false, "benchmark the maphash")
 
 	status = m.Run()
 }
@@ -80,9 +80,9 @@ func BenchmarkHash(b *testing.B) {
 				b.ResetTimer()
 
 				for i := 0; i < b.N; i++ {
-					h := hash.New()
-					h.AddString(d)
-					acc = h.Hash()
+					var h maphash.Hash
+					h.WriteString(d)
+					acc = h.Sum64()
 				}
 				runtime.KeepAlive(acc)
 			})
