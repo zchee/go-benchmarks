@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"testing"
 
-	base64_chenzhuoyu "github.com/chenzhuoyu/base64x"
+	base64_chenzhuoyu "github.com/cloudwego/base64x"
 	base64_cristalhq "github.com/cristalhq/base64"
 	base64_segmentio "github.com/segmentio/asm/base64"
 )
