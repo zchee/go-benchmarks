@@ -22,34 +22,28 @@ var (
 )
 
 func BenchmarkGetBadger(b *testing.B) {
-	tmp, err := ioutil.TempDir(os.TempDir(), "badger")
+	tmp := b.TempDir()
+
+	db, err := badger.Open(badger.DefaultOptions(tmp).WithLogger(nil))
 	if err != nil {
 		b.Fatal(err)
 	}
+	defer db.Close()
 
-	opt := badger.DefaultOptions
-	opt.Dir = tmp
-	opt.ValueDir = tmp
-	db, err := badger.NewKV(&opt)
-	if err != nil {
+	if err := db.Update(func(txn *badger.Txn) error {
+		return txn.Set(testKey, testValue)
+	}); err != nil {
 		b.Fatal(err)
 	}
-
-	if err := db.Set(testKey, testValue); err != nil {
-		b.Fatal(err)
-	}
-	item := new(badger.KVItem)
 
 	b.SetBytes(testValueSize)
-	b.ResetTimer()
 
-	for i := 0; i < b.N; i++ {
-		db.Get(testKey, item)
+	for b.Loop() {
+		db.View(func(txn *badger.Txn) error {
+			_, err := txn.Get(testKey)
+			return err
+		})
 	}
-
-	b.StopTimer()
-	db.Close()
-	os.RemoveAll(tmp)
 }
 
 func BenchmarkGetLevelDB(b *testing.B) {
@@ -68,9 +62,8 @@ func BenchmarkGetLevelDB(b *testing.B) {
 	}
 
 	b.SetBytes(testValueSize)
-	b.ResetTimer()
 
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		db.Get(testKey, nil)
 	}
 
@@ -85,7 +78,7 @@ func BenchmarkGetBolt(b *testing.B) {
 		b.Fatal(err)
 	}
 
-	db, err := bolt.Open(filepath.Join(tmp, "test.db"), 0600, nil)
+	db, err := bolt.Open(filepath.Join(tmp, "test.db"), 0o600, nil)
 	if err != nil {
 		b.Fatal(err)
 	}
@@ -104,9 +97,8 @@ func BenchmarkGetBolt(b *testing.B) {
 	}
 
 	b.SetBytes(testValueSize)
-	b.ResetTimer()
 
-	for i := 0; i < b.N; i++ {
+	for b.Loop() {
 		db.View(func(tx *bolt.Tx) error {
 			bc := tx.Bucket(bucketName)
 			bc.Get(testKey)
